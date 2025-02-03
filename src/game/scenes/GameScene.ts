@@ -100,6 +100,8 @@ export default class GameScene extends Phaser.Scene {
     );
   }
 
+  private activeDirection: { x: number; y: number } = { x: 0, y: 0 };
+
   private createTouchControls() {
     const buttonSize = 80;
     const screenWidth = this.scale.width - 100;
@@ -143,22 +145,21 @@ export default class GameScene extends Phaser.Scene {
       )
       .setInteractive();
 
-    this.buttons["left"].on("pointerdown", () =>
-      this.player.setVelocityX(-MovementSpeed)
-    );
-    this.buttons["right"].on("pointerdown", () =>
-      this.player.setVelocityX(MovementSpeed)
-    );
-    this.buttons["up"].on("pointerdown", () =>
-      this.player.setVelocityY(-MovementSpeed)
-    );
-    this.buttons["down"].on("pointerdown", () =>
-      this.player.setVelocityY(MovementSpeed)
-    );
+    // Movement when button is pressed
+    this.buttons["left"].on("pointerdown", () => (this.activeDirection.x = -1));
+    this.buttons["right"].on("pointerdown", () => (this.activeDirection.x = 1));
+    this.buttons["up"].on("pointerdown", () => (this.activeDirection.y = -1));
+    this.buttons["down"].on("pointerdown", () => (this.activeDirection.y = 1));
 
-    this.buttons["left"].on("pointerup", () => this.player.setVelocityX(0));
-    this.buttons["right"].on("pointerup", () => this.player.setVelocityX(0));
-    this.buttons["up"].on("pointerup", () => this.player.setVelocityY(0));
-    this.buttons["down"].on("pointerup", () => this.player.setVelocityY(0));
+    // Stop movement when button is released or pointer leaves button
+    ["left", "right"].forEach((key) => {
+      this.buttons[key].on("pointerup", () => (this.activeDirection.x = 0));
+      this.buttons[key].on("pointerout", () => (this.activeDirection.x = 0));
+    });
+
+    ["up", "down"].forEach((key) => {
+      this.buttons[key].on("pointerup", () => (this.activeDirection.y = 0));
+      this.buttons[key].on("pointerout", () => (this.activeDirection.y = 0));
+    });
   }
 }
