@@ -11,7 +11,7 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <h1>Telegram Mini Game</h1>
+      {/* <h1>Telegram Mini Game</h1> */}
       <GameCanvas />
     </div>
   );

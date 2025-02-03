@@ -21,6 +21,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    this.physics.world.gravity.y = 0;
+
     // Set camera zoom
     this.cameras.main.setZoom(1);
 
@@ -58,9 +60,9 @@ export default class GameScene extends Phaser.Scene {
     );
 
     // Add touch controls if on mobile
-    if (this.isTouchDevice) {
-      this.createTouchControls();
-    }
+    // if (this.isTouchDevice) {
+    this.createTouchControls();
+    // }
   }
 
   update() {
@@ -100,15 +102,27 @@ export default class GameScene extends Phaser.Scene {
 
   private createTouchControls() {
     const buttonSize = 80;
-    const screenWidth = this.scale.width;
+    const screenWidth = this.scale.width - 100;
     const screenHeight = this.scale.height;
 
     // Create buttons for movement
     this.buttons["left"] = this.add
-      .rectangle(50, screenHeight - 100, buttonSize, buttonSize, 0x6666ff)
+      .rectangle(
+        screenWidth - 200,
+        screenHeight - 100,
+        buttonSize,
+        buttonSize,
+        0x6666ff
+      )
       .setInteractive();
     this.buttons["right"] = this.add
-      .rectangle(150, screenHeight - 100, buttonSize, buttonSize, 0x6666ff)
+      .rectangle(
+        screenWidth,
+        screenHeight - 100,
+        buttonSize,
+        buttonSize,
+        0x6666ff
+      )
       .setInteractive();
     this.buttons["up"] = this.add
       .rectangle(
