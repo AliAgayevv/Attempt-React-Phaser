@@ -6,6 +6,8 @@
   ],
     "compilerOptions": {
       "types": ["@twa-dev/sdk", "phaser"],
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+
     }
+    
 }
